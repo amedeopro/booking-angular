@@ -1,0 +1,49 @@
+<div class="wrapper three-cols">
+  <!--SIDEBAR-->
+  <app-card title="Search" customCls="side-bar" [isScrollable]="true">
+      <app-hotel-form
+        [text]="text"
+        (search)="search($event)"
+      ></app-hotel-form>
+      <app-separator></app-separator>
+      <app-hotel-list
+        [hotels]="hotels"
+        [activeHotel]="activeHotel"
+        [text]="text"
+        (setActive)="setActive($event)"
+      ></app-hotel-list>
+  </app-card>
+
+  <app-card customCls="map" [padding]="false">
+      <app-gmap [activeHotel]="activeHotel"></app-gmap>
+  </app-card>
+
+  <app-card [centeredContent]="true">
+      <app-separator></app-separator>
+      <app-rates [activeHotel]="activeHotel"></app-rates>
+      <br>
+      <app-reservations
+        [activeHotel]="activeHotel"
+        (addToCart)="addToCart(hotels)"
+      ></app-reservations>
+  </app-card>
+
+<app-card [isScrollable]="true" customCls="gallery">
+    <app-image-gallery
+    [activeImage]="activeImage"
+    [activeHotel]="activeHotel"
+    (setActiveImgae)="setActiveImgae($event)"
+    ></app-image-gallery>
+</app-card>
+
+<app-card customCls="services" [isScrollable]="true" title="Services">
+    <app-services [activeHotel]="activeHotel"></app-services>
+</app-card>
+
+<app-card customCls="contact" title="Contacts">
+    <app-contact-form
+    (inviaMail)="inviaMail($event)"
+    ></app-contact-form>
+</app-card>
+
+</div>
