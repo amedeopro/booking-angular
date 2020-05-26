@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Hotel} from '../../../model/hotel';
 import {CartService} from '../../../services/cart.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -14,7 +15,7 @@ export class SearchComponent{
   hotels: Hotel[] = [];
   activeHotel: Hotel;
   activeImage: string;
-  constructor(private http: HttpClient, public cart: CartService) {
+  constructor(private http: HttpClient, public cart: CartService, private router: Router) {
     this.search(this.text);
   }
 
@@ -22,6 +23,10 @@ export class SearchComponent{
     this.text = text
     this.http.get<Hotel[]>(`http://localhost:3000/hotels?q=` + text)
       .subscribe(res => {
+        if(!res.length){
+          this.router.navigateByUrl('search/no-results');
+            return;
+        }
         console.log(res);
         this.hotels = res
         this.setActive(this.hotels[0])
